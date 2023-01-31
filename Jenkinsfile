@@ -17,6 +17,15 @@ pipeline {
                 sh 'npm install'
             }
         }
+        stage('Unit Testing') {
+            when {
+                branch "PR-*"
+            }
+            steps {
+                sh 'cp -avpr /opt/firebase.ts src/'
+                sh 'npm test'
+            }
+        }
         stage('Code Anylasis') {
             when {
                 branch "PR-*"
