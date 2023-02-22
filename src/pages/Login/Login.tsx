@@ -14,6 +14,7 @@ import {
   IonText,
   IonButton,
   IonLoading,
+  isPlatform
 } from "@ionic/react";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
@@ -21,26 +22,60 @@ import ToolbarButtons from "../../components/ToolbarButtons/ToolbarButtons";
 import { Redirect } from "react-router";
 import { login } from "../../services/Auth";
 import { useDispatch } from "react-redux";
-import {auth as firebaseAuth } from '../../firebase';
+import { auth as firebaseAuth } from "../../firebase";
 import { auth } from "firebase";
+import { act } from "react-dom/test-utils";
 
-const Login: React.FC = () => {
+interface LoginProps {
+  onLogin: (username: string, password: string) => void;
+  test : Boolean;
+}
+
+const Login: React.FC<LoginProps> = ({ onLogin , test }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState({ loading: false, error: false });
 
-   const loginHandler = () => {
+  const loginHandler = async () => {
+    if (test === true) {
+      // console.log(""); 
+      onLogin(email,password)
+      return
+    }
     setStatus({ loading: true, error: false });
-     login(email, password).then((result) => {
-      if(status.loading) {
-        setStatus({ loading: false, error: false });
-      }
-     })
+    login(email, password)
+      .then((result) => {
+        // console.log("")
+        if (status.loading) {
+          setStatus({ loading: false, error: false });
+        }
+      })
       .catch((e) => {
         console.log("caught error in log in page: ", e);
         setStatus({ loading: false, error: true });
       });
   };
+
+  const mockLogin = async () => {
+    if(email == "" || password == ""){
+      console.log("Please enter both a username and password")
+      return;
+    }
+    try {
+     const data:any = await login(email, password)
+     if(data){
+      console.log(JSON.stringify("aakash",data))
+     }
+    }
+    catch(err:any) {
+      console.log("[mock login]", err)
+      if(err){
+        throw JSON.stringify(err.message)
+      }
+      return true
+    }
+  };
+
   if (!!firebaseAuth.currentUser) {
     return <Redirect to="/home" />;
   }
@@ -88,7 +123,7 @@ const Login: React.FC = () => {
                   <IonText color="danger">Invalid Credentials</IonText>
                 )}
               </IonList>
-              <IonButton expand="block" onClick={loginHandler}>
+              <IonButton role={"button"}  expand="block" onClick={loginHandler}>
                 Submit
               </IonButton>
               <IonButton
@@ -108,3 +143,24 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
+// const loginHandler = async () => {
+//   if (test === true) {
+//     console.log("aakash"); 
+//     onLogin(email,password)
+//     return
+//   }
+//   setStatus({ loading: true, error: false });
+//    login(email, password).then((result) => {
+//     console.log("aakash2");
+//     if(status.loading) {
+//       setStatus({ loading: false, error: false });
+//     }
+  
+//    })
+//     .catch((e) => {
+//       console.log("caught error in log in page: ", e);
+//       setStatus({ loading: false, error: true });
+//     });
+// };

@@ -2,6 +2,7 @@ import { auth as firebaseAuth} from "../firebase";
 import { useEffect, useState } from "react";
 import { clearFavouritesCache } from './FavouritesService';
 
+
 interface AuthInit {
     loading: boolean;
     loggedIn: boolean;
@@ -20,7 +21,7 @@ export function  useAuthInit(): AuthInit {
 }
 
 export const login = async (email: string, password: string) => {
-  console.log("[Auth Service] Logging in...");
+  console.log("[Auth Service] Logging in...", email , password);
   try {
     const credential = await firebaseAuth.signInWithEmailAndPassword(email, password);
   } catch (e) {
@@ -35,8 +36,10 @@ export const logout = () => {
 };
 
 export const register = async (email: string, password: string) => {
+  // const [status, setStatus] = useState({ loading: false, error: false });
+
   try {
-    const credential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+const credential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
   } catch (e) {
     console.log('error caught in auth service: ', e)
     throw e;
