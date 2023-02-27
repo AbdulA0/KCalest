@@ -69,7 +69,7 @@ const Favourites: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
+      <IonHeader  data-testid="fav"  >
         <IonToolbar color="none" className={styles.Toolbar}>
           <IonTitle className={styles.ToolbarTitle}>Kcalest</IonTitle>
           <ToolbarButtons />
@@ -77,6 +77,7 @@ const Favourites: React.FC = () => {
       </IonHeader>
       <IonContent>
         <SearchItemModal
+            data-testid ={'searchitemModal'}
           showModal={showModal}
           isAuthenticated={isAuthenticated}
           onCancel={searchItemModalCloseHandler}
@@ -85,6 +86,7 @@ const Favourites: React.FC = () => {
         />
         <IonGrid className={styles.Grid}>
           <SearchItemList
+          data-testid ={'searchitemlist'}
             searchItems={favouriteItems}
             itemClickedHandler={itemClickedHandler}
           />

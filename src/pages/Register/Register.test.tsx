@@ -13,6 +13,14 @@ import userEvent from "@testing-library/user-event";
 
 
 describe("Register component", () => {
+it(' register component  should have title of Register',()=>{
+  const{findByTestId,findByText} =render(<Register test={true} />)
+    const text =  findByText('Register')
+    expect(text)
+  //  const pageid = findByTestId('register')
+  //  expect(pageid)
+})
+
   it("renders the Register form", async () => {
     const { findByText, findByTestId, getByRole } = render(<Register test={true} />);
     await findByTestId("emailAddress");

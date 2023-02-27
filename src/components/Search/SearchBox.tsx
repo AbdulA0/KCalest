@@ -50,6 +50,7 @@ const SearchBox: React.FC<propType> = (props) => {
         <div className={styles.SearchBoxDisplay}>
           {display === 'search' && (
             <SearchDisplay 
+            data-testid ={'searchDisplay'}
             getItemsHandler={props.getItemsHandler}
             errorMessage={props.errorMessage}
             setFilter={props.setFilter}
@@ -71,18 +72,21 @@ const SearchBox: React.FC<propType> = (props) => {
         </div>
         <div className={styles.SearchBoxDividers}>
           <button
+          role={'button'}
             className={[styles.Divider, styles.Divider1].join(" ")}
             onClick={() => dividerClickedHandler("search")}
           >
             search
           </button>
           <button
+            role={'button'}
             className={[styles.Divider, styles.Divider2].join(" ")}
             onClick={() => dividerClickedHandler("resturant")}
           >
             resturant
           </button>
           <button
+            role={'button'}
             className={[styles.Divider, styles.Divider3].join(" ")}
             onClick={() => dividerClickedHandler("eco")}
           >

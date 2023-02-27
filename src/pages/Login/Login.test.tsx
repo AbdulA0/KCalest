@@ -4,10 +4,18 @@ import React from 'react';
 import Login from './Login';
 
 describe('Login component', () => {
+
+it('renders login page title without error',()=>{
+  const{findByText} =render(<Login test={true} onLogin={function(username:string,password:string):void{throw new Error ('function not implemented')}}/>)
+  findByText('Login')
+})
+
+
   it('renders the login form', async () => {
     const { findByText , findByTestId , getByRole} = render(<Login test={true} onLogin={function (username: string, password: string): void {
       throw new Error('Function not implemented.');
     } } />);
+
     await findByTestId('emailAddress');
     await findByTestId('password');
     getByRole('button', { name: 'Submit' });

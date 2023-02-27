@@ -47,7 +47,7 @@ const SearchDisplay: React.FC<propType> = (props) => {
 
   return (
     <div className={styles.SearchBoxDisplaySearch}>
-      <div className={styles.SearchBoxDietButtons}>
+      <div data-testid="display" className={styles.SearchBoxDietButtons}>
         {dietButtons.map((button) => {
           let { dietButtonClasses, disabled } = getDietButtonStyles(
             styles,
@@ -58,7 +58,7 @@ const SearchDisplay: React.FC<propType> = (props) => {
 
           return (
             <button
-              className={dietButtonClasses.join(" ")}
+          className={dietButtonClasses.join(" ")}
               onClick={() => props.setFilter(button.id)}
               key={button.id}
               disabled={disabled}
@@ -77,8 +77,8 @@ const SearchDisplay: React.FC<propType> = (props) => {
         })}
       </div>
 
-      <IonItem class="ion-margin-bottom">
-        <IonInput placeholder="Calories..." value={props.calories} onIonChange={(e) => props.getCalories(e.detail.value)}></IonInput>
+      <IonItem class="ion-margin-bottom"  >
+        <IonInput  data-testid="bttn"  placeholder="Calories..." value={props.calories} onIonChange={(e) => props.getCalories(e.detail.value)}></IonInput>
       </IonItem>
       <IonSegment
         onIonChange={(e) => props.onSegmentChange(e.detail.value)}
@@ -101,6 +101,7 @@ const SearchDisplay: React.FC<propType> = (props) => {
       )}
 
       <IonButton
+      role={'button'}
         class="ion-margin-top"
         expand="block"
         onClick={(e) => props.getItemsHandler(e, props.calories)}

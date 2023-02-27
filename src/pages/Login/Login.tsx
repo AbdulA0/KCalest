@@ -64,15 +64,15 @@ const Login: React.FC<LoginProps> = ({ onLogin , test }) => {
     try {
      const data:any = await login(email, password)
      if(data){
-      console.log(JSON.stringify("aakash",data))
+      // console.log(JSON.stringify("aakash",data))
      }
     }
     catch(err:any) {
-      console.log("[mock login]", err)
+      // console.log("[mock login]", err)
       if(err){
         throw JSON.stringify(err.message)
       }
-      return true
+      // return true
     }
   };
 

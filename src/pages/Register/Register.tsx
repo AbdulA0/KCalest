@@ -52,7 +52,6 @@ const Register: React.FC<RegisterProps> = ({ test }) => {
       })
       .catch((e) => {
         console.log("caught error in registration page: ", e);
-
         setStatus({ loading: false, error: true });
     setErrorMessage(e);
       });
@@ -66,10 +65,10 @@ const Register: React.FC<RegisterProps> = ({ test }) => {
     try {
       const data: any = await register(email, password);
       if (data) {
-        console.log(JSON.stringify("register", data));
+        // console.log(JSON.stringify("register", data));
       }
     } catch (err: any) {
-      console.log("[mock register]", err);
+      // console.log("[mock register]", err);
       if (err) {
         throw JSON.stringify(err.message);
       }
@@ -80,7 +79,7 @@ const Register: React.FC<RegisterProps> = ({ test }) => {
     return <Redirect to="/home" />;
   }
   return (
-    <IonPage>
+    <IonPage  data-testid ={'register'}>
       <IonHeader>
         <IonToolbar className={styles.Toolbar} color="none">
           <IonTitle className={styles.ToolbarTitle}>Register</IonTitle>

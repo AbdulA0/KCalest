@@ -15,13 +15,20 @@ import {
   import { logout } from "../../services/Auth";
   import { useHistory } from 'react-router-dom';
 
+
+  interface SettingProps {
+    onLogout: object
+    
+  }
+
   
   const Settings: React.FC = () => {
     const history = useHistory();
     console.log('[Settings.tsx]');
     const logoutHandler = () => {
-      logout();
-      history.push('/home');
+   
+        logout();
+        history.push('/home');
     };
 
     return (
@@ -41,7 +48,7 @@ import {
                 offsetMd="3"
                 className={styles.LandingPageSearchBoxCol}
               >
-                <IonButton expand='block' onClick={logoutHandler}>Logout</IonButton>
+                <IonButton role={"button"} expand='block' onClick={logoutHandler}>Logout</IonButton>
               </IonCol>
             </IonRow>
           </IonGrid>
