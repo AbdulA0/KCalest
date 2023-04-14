@@ -19,6 +19,8 @@ import {
   heartOutline,
 } from "ionicons/icons";
 
+
+
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
 
@@ -48,7 +50,6 @@ import { initFavourites } from './services/FavouritesService';
 
 const App: React.FC = () => {
    const {loading, loggedIn} = useAuthInit();
-
    useEffect(() => {
     initFavourites(loggedIn);
    }, [loggedIn]);

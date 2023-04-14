@@ -7,15 +7,19 @@ import { auth as firebaseUser } from "../../firebase";
 
 const SelectAuth: React.FC = () => {
   const routeId = useParams<{ id: string }>().id;
-  let nextPage = useRef<JSX.Element>(<Login />);
+  let nextPage = useRef<JSX.Element>(<Login test={false} onLogin={function (username: string, password: string): void {
+    throw new Error("Function not implemented.");
+  } } />);
 
   if (!!firebaseUser.currentUser) {
     nextPage.current = (<Settings />) as JSX.Element;
   } else {
     if (routeId === "register") {
-      nextPage.current = (<Register />) as JSX.Element;
+      nextPage.current = (<Register test={false} />) as JSX.Element;
     } else {
-      nextPage.current = (<Login />) as JSX.Element;
+      nextPage.current = (<Login test={false} onLogin={function (username: string, password: string): void {
+        throw new Error("Function not implemented.");
+      } } />) as JSX.Element;
     }
   }
   return nextPage.current;

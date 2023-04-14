@@ -35,8 +35,15 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom-fourteen",
+    "test": "react-scripts test --env=jsdom-fourteen --coverage",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "coverageReporters": [
+      "lcov",
+      "text",
+      "cobertura"
+    ]
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,7 +61,8 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.2"
+    "@capacitor/cli": "2.4.2",
+    "@types/enzyme": "^3.10.12"
   },
   "description": "An Ionic project"
 }

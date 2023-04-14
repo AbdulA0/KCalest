@@ -63,6 +63,7 @@ const SearchItemModal: React.FC<{
 
   return (
     <IonModal
+    data-testid="close"
       isOpen={props.showModal}
       cssClass="my-custom-class"
       onDidDismiss={() => props.onCancel(props.model.item!.id, isFavourite)}
@@ -74,7 +75,7 @@ const SearchItemModal: React.FC<{
           </IonTitle>
           {props.isAuthenticated && (
             <IonButtons slot="end">
-              <IonButton onClick={clickFavouriteHandler}>{icon}</IonButton>
+              <IonButton  role={"button"}   onClick={clickFavouriteHandler}>{icon}</IonButton>
             </IonButtons>
           )}
         </IonToolbar>

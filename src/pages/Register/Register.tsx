@@ -19,34 +19,67 @@ import React, { useState } from "react";
 import styles from "./Register.module.css";
 import ToolbarButtons from "../../components/ToolbarButtons/ToolbarButtons";
 import { Redirect } from "react-router";
-import {register} from '../../services/Auth';
+import { register } from "../../services/Auth";
+import { act } from "@testing-library/react";
 
-const Register: React.FC = () => {
+import { async } from "rxjs";
+
+interface RegisterProps {
+  // onRegister: (username: string, password: string) => void;
+  test: Boolean;
+}
+
+const Register: React.FC<RegisterProps> = ({ test }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState({ loading: false, error: false });
   const [errorMessage, setErrorMessage] = useState("");
-  const registerHandler = () => {
+
+  const registerHandler = async () => {
+    if (test) {
+      // console.log("")
+      mockRegister();
+      return;
+    }
+
     setStatus({ loading: true, error: false });
     register(email, password)
       .then((result) => {
-        if(status.loading) {
+        // console.log("");
+        if (status.loading) {
           setStatus({ loading: false, error: false });
         }
       })
-      .catch((e) => { 
+      .catch((e) => {
         console.log("caught error in registration page: ", e);
         setStatus({ loading: false, error: true });
-        setErrorMessage(e);
+    setErrorMessage(e);
       });
-    
+  };
+
+  const mockRegister = async () => {
+    if (email == "" || password == "") {
+      console.log("Please enter both a username and password");
+      return;
+    }
+    try {
+      const data: any = await register(email, password);
+      if (data) {
+        // console.log(JSON.stringify("register", data));
+      }
+    } catch (err: any) {
+      // console.log("[mock register]", err);
+      if (err) {
+        throw JSON.stringify(err.message);
+      }
+    }
   };
 
   if (false) {
     return <Redirect to="/home" />;
   }
   return (
-    <IonPage>
+    <IonPage  data-testid ={'register'}>
       <IonHeader>
         <IonToolbar className={styles.Toolbar} color="none">
           <IonTitle className={styles.ToolbarTitle}>Register</IonTitle>
@@ -66,6 +99,7 @@ const Register: React.FC = () => {
                 <IonItem>
                   <IonLabel position="stacked">Email</IonLabel>
                   <IonInput
+                    data-testid="emailAddress"
                     type="email"
                     value={email}
                     onIonChange={(event) =>
@@ -76,6 +110,7 @@ const Register: React.FC = () => {
                 <IonItem>
                   <IonLabel position="stacked">Password</IonLabel>
                   <IonInput
+                    data-testid="password"
                     type="password"
                     value={password}
                     onIonChange={(event) =>
@@ -84,10 +119,15 @@ const Register: React.FC = () => {
                   />
                 </IonItem>
                 {status.error && (
-                  <IonText color="danger">{errorMessage.toString().substring(6)}</IonText>
+                  <IonText color="danger">
+                    {errorMessage.toString().substring(6)}
+                  </IonText>
                 )}
               </IonList>
-              <IonButton onClick={registerHandler}>Create Account</IonButton>
+              <IonButton role={"button"} onClick={registerHandler}>
+                Create Account
+              </IonButton>
+
               <IonButton expand="block" fill="clear" routerLink="/auth/login">
                 already have an account?
               </IonButton>

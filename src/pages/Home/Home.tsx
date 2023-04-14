@@ -157,6 +157,7 @@ const Home: React.FC = () => {
         />
         <IonGrid className={styles.Grid}>
           <SearchBox
+          data-testid ={'searchBox'}
             getItemsHandler={getItemsHandler}
             errorMessage={searchBoxErrorMessage}
             setFilter={setFilter}
